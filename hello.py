@@ -1,10 +1,18 @@
-from flask import Flask
-app = Flask(__name__)
+from flask import Flask, render_template
+from flask_bootstrap import Bootstrap
+from datetime import datetime
+
+
+app = Flask(__name__, template_folder='templates')
+bootstrap=Bootstrap(app)
+
+time_now = datetime.now()
+date_time = time_now.strftime("%A, %B %d, %Y, %I:%M %p")
 
 @app.route('/')
 def index():
-    return '<h1>Hello World!</h1>'
+    return render_template('index.html')
 
 @app.route('/user/<name>')
 def user(name):
-    return '<h1>Hello, %s!</h1>' % name
+    return render_template('user.html', name=name, date_time=date_time)
